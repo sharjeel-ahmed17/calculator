@@ -4,82 +4,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>calculator app</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
         .container {
-            width: 500px;
-        }
-
-        input {
-            width: 100%;
-            border: none;
-        }
-
-        .buttons {
+            max-width: 400px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            box-shadow: 4px 3px 10px 4px black;
+        }
+
+        .container input:nth-child(1) {
+            /* grid-column-start: 1;
+            grid-column-end: 4; */
+            grid-column: 1/ 4;
+
+        }
+
+
+
+
+        input {
+
+            background: transparent;
+            border: none;
+
+            background-color: green;
+            padding: 10px;
+            border-radius: 20px;
+
+        }
+
+
+        #result {
+            color: white;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <input type="text" class="display">
-        <div class="buttons">
-            <button class="operator" data-value="AC">ac</button>
-            <button class="operator" data-value="DEL">del</button>
-            <button class="operator" data-value="%">%</button>
-            <button class="operator" data-value="/">/</button>
+    <div class="main-container">
+        <div class="container">
 
-            <button data-value="7">7</button>
-            <button data-value="8">8</button>
-            <button data-value="9">9</button>
-            <button class="operator" data-value="*">x</button>
 
-            <button data-value="4">4</button>
-            <button data-value="5">5</button>
-            <button data-value="6">6</button>
-            <button class="operator" data-value="-">-</button>
 
-            <button data-value="1">1</button>
-            <button data-value="2">2</button>
-            <button data-value="3">3</button>
-            <button class="operator" data-value="+">+</button>
+            <input type="text" value="" id="result" disabled>
+            <input type="button" value="c" onclick="clearScreen()">
 
-            <button data-value="0">0</button>
-            <button data-value="00">00</button>
-            <button data-value=".">.</button>
-            <button class="operator" data-value="=">=</button>
+            <input type="button" value="1" onclick="display('1')">
+            <input type="button" value="2" onclick="display('2')">
+            <input type="button" value="3" onclick="display('3')">
+            <input type="button" value="4" onclick="display('4')">
+            <input type="button" value="5" onclick="display('5')">
+            <input type="button" value="6" onclick="display('6')">
+            <input type="button" value="7" onclick="display('7')">
+            <input type="button" value="8" onclick="display('8')">
+            <input type="button" value="9" onclick="display('9')">
+            <input type="button" value="0" onclick="display('0')">
+            <input type="button" value="00" onclick="display('00')">
+
+            <input type="button" value="+" onclick="display('+')">
+            <input type="button" value="-" onclick="display('-')">
+            <input type="button" value="/" onclick="display('/')">
+            <input type="button" value="x" onclick="display('*')">
+            <input type="button" value="=" onclick="calculate()">
+
 
         </div>
-
-        <script>
-            const display = document.querySelector(".display");
-            const buttons = document.querySelectorAll(".buttons button");
-            const operators = ["%", "/", "*", "+", "-", "="];
-
-            let output = "";
-            const calculator = (btnValue) => {
-                display.focus();
-
-                if (btnValue === "=" && output !== "") {
-                    output = eval(output.replace("%", "/100"));
-                } else if (btnValue === "AC") {
-                    output = "";
-                } else if (btnValue === "DEL") {
-                    output = output.toString().slice(0, -1);
-                } else {
-                    if (output === "" && operators.includes(btnValue)) return;
-                    output += btnValue;
-                }
-                display.value = output;
-            };
-
-            buttons.forEach((button) => {
-                button.addEventListener("click", (e) => calculator(e.target.dataset.value));
-            });
-        </script>
     </div>
+    <script>
+        let result = document.getElementById("result");
+
+        function clearScreen() {
+            result.value = null;
+
+
+        }
+        function display(value) {
+            result.value += value;
+
+        }
+        function calculate() {
+            let p = result.value;
+            let q = eval(p)
+            result.value = q;
+        }
+
+    </script>
 </body>
 
 </html>
